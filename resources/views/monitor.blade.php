@@ -115,11 +115,11 @@
                                         @endif
                                         </td>
                                         <td class="px-6 py-4 text-center">
-                                            <a href="" class="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg shadow-md hover:bg-blue-500 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">Edit</a>
+                                            <a href="" class="px-3 py-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">Edit</a>
                                             <form action="" method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="px-4 py-2 text-sm font-medium text-white bg-red-600 rounded-lg shadow-md hover:bg-red-500 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">Hapus</button>
+                                                <button type="submit" class="px-3 py-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 deleteButton">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>

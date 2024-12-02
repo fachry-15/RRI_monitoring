@@ -34,7 +34,6 @@ class RolesAndPermissionsSeeder extends Seeder
         Permission::create(['name' => 'accepted work']);
         Permission::create(['name' => 'rejected work']);
 
-
         $superadmin = Role::create(['name' => 'superadmin']);
         $superadmin->givePermissionTo(Permission::all());
 
