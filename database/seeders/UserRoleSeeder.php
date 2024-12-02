@@ -21,7 +21,7 @@ class UserRoleSeeder extends Seeder
 
         $user = User::find(1);
         if ($user) {
-            $user->assignRole('supoeadmin');
+            $user->assignRole('superadmin');
         }
 
         $user = User::find(2);

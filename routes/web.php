@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\HomeControllers;
+use App\Http\Controllers\JaringanController;
+use App\Http\Controllers\LoggerController;
+use App\Http\Controllers\MonitorController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RuanganController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
@@ -21,17 +26,41 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'permission:publish'])->group(function () {
+    Route::get('/dashboard', [HomeControllers::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
     Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
     Route::get('/ruangan/create', [RuanganController::class, 'create'])->name('ruangan.create');
     Route::post('/ruangan', [RuanganController::class, 'store'])->name('ruangan.store');
+    Route::get('/ruangan/{id}/edit', [RuanganController::class, 'edit'])->name('ruangan.edit');
+    Route::put('/ruangan/{id}', [RuanganController::class, 'update'])->name('ruangan.update');
+    Route::delete('/ruangan/{id}', [RuanganController::class, 'destroy'])->name('ruangan.destroy');
+
+    Route::get('/jaringan', [JaringanController::class, 'index'])->name('jaringan.index');
+    Route::get('/jaringan/create', [JaringanController::class, 'create'])->name('jaringan.create');
+    Route::post('/jaringan', [JaringanController::class, 'store'])->name('jaringan.store');
+    Route::get('/jaringan/{id}/edit', [JaringanController::class, 'edit'])->name('jaringan.edit');
+    Route::put('/jaringan/{id}', [JaringanController::class, 'update'])->name('jaringan.update');
+    Route::delete('/jaringan/{id}', [JaringanController::class, 'destroy'])->name('jaringan.destroy');
+
+    Route::get('/logger', [LoggerController::class, 'index'])->name('logger.index');
+    Route::get('/logger/create', [LoggerController::class, 'create'])->name('logger.create');
+    Route::post('/logger', [LoggerController::class, 'store'])->name('logger.store');
+    Route::get('/logger/{id}/edit', [LoggerController::class, 'edit'])->name('logger.edit');
+    Route::put('/logger/{id}', [LoggerController::class, 'update'])->name('logger.update');
+    Route::delete('/logger/{id}', [LoggerController::class, 'destroy'])->name('logger.destroy');
+
+    Route::get('/monitorjaringan', [MonitorController::class, 'index'])->name('monitor.index');
+    Route::get('/monitorjaringan/create', [MonitorController::class, 'create'])->name('monitor.create');
+    Route::post('/monitorjaringan', [MonitorController::class, 'store'])->name('monitor.store');
+
+    Route::get('/pegawai', [UserController::class, 'index'])->name('pegawai.index');
+    Route::get('/pegawai/create', [UserController::class, 'create'])->name('pegawai.create');
+    Route::post('/pegawai', [UserController::class, 'store'])->name('pegawai.store');
 });
 
 

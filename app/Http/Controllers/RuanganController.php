@@ -45,14 +45,19 @@ class RuanganController extends Controller
             'lokasi' => 'required|integer|min:1',
         ]);
 
-        // Buat ruangan baru
-        $ruangan = new ruangan();
-        $ruangan->nama_ruangan = $request->nama;
-        $ruangan->lokasi_ruangan = $request->lokasi;
-        $ruangan->save();
+        try {
+            // Buat ruangan baru
+            $ruangan = new Ruangan();
+            $ruangan->nama_ruangan = $request->nama;
+            $ruangan->lokasi_ruangan = $request->lokasi;
+            $ruangan->save();
 
-        // Redirect kembali ke halaman sebelumnya
-        return redirect()->route('ruangan.index');
+            // Redirect kembali ke halaman sebelumnya dengan pesan sukses
+            return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil dibuat.');
+        } catch (\Exception $e) {
+            // Redirect kembali ke halaman sebelumnya dengan pesan error
+            return redirect()->route('ruangan.index')->with('error', 'Terjadi kesalahan saat membuat ruangan: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -72,9 +77,10 @@ class RuanganController extends Controller
      * @param  \App\Models\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function edit(Ruangan $ruangan)
+    public function edit($id)
     {
-        //
+        $ruangan = Ruangan::find($id);
+        return view('forms.editruangan', compact('ruangan'));
     }
 
     /**
@@ -84,9 +90,27 @@ class RuanganController extends Controller
      * @param  \App\Models\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Ruangan $ruangan)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi data
+        $request->validate([
+            'nama' => 'required|string|max:255',
+            'lokasi' => 'required|integer|min:1',
+        ]);
+
+        try {
+            // Update ruangan
+            $ruangan = Ruangan::findOrFail($id);
+            $ruangan->nama_ruangan = $request->nama;
+            $ruangan->lokasi_ruangan = $request->lokasi;
+            $ruangan->save();
+
+            // Redirect kembali ke halaman sebelumnya dengan pesan sukses
+            return redirect()->route('ruangan.index')->with('success', 'Ruangan berhasil diubah.');
+        } catch (\Exception $e) {
+            // Redirect kembali ke halaman sebelumnya dengan pesan error
+            return redirect()->route('ruangan.index')->with('error', 'Terjadi kesalahan saat mengubah ruangan: ' . $e->getMessage());
+        }
     }
 
     /**
@@ -95,8 +119,10 @@ class RuanganController extends Controller
      * @param  \App\Models\Ruangan  $ruangan
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Ruangan $ruangan)
+    public function destroy($id)
     {
-        //
+        $ruangan = Ruangan::findOrFail($id);
+        $ruangan->delete();
+        return redirect('/ruangan')->with('success', 'Ruangan berhasil dihapus.');
     }
 }
