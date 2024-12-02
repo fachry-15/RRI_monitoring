@@ -42,14 +42,13 @@ Route::middleware(['auth','role:Petugas Monitor Jaringan|superadmin|Petugas Utam
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/dashboard', [HomeControllers::class, 'index'])->name('dashboard'); 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::middleware(['auth', 'role:superadmin'])->group(function () {
-    Route::get('/dashboard', [HomeControllers::class, 'index'])->name('dashboard');
-
     Route::get('/ruangan', [RuanganController::class, 'index'])->name('ruangan.index');
     Route::get('/ruangan/create', [RuanganController::class, 'create'])->name('ruangan.create');
     Route::post('/ruangan', [RuanganController::class, 'store'])->name('ruangan.store');
