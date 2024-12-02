@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\jaringan;
 use App\Models\monitor;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MonitorController extends Controller
 {
@@ -116,8 +117,19 @@ class MonitorController extends Controller
      * @param  \App\Models\monitor  $monitor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(monitor $monitor)
+    public function destroy($id)
     {
-        //
+        $data = monitor::findOrFail($id);
+
+        // Pastikan ID pengguna yang sedang login adalah pemilik data
+        if ($data->petugas_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Mohon maaf anda tidak memiliki hak untuk menghapus data ini.');
+        }
+
+        // Hapus data
+        $data->delete();
+
+        // Redirect kembali dengan pesan sukses
+        return redirect()->route('monitor.index')->with('success', 'Data berhasil dihapus.');
     }
 }

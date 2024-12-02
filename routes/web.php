@@ -35,14 +35,15 @@ Route::middleware(['auth', 'role:Petugas Monitor Logger|superadmin|Petugas Utama
     Route::delete('/logger/{id}', [LoggerController::class, 'destroy'])->name('logger.destroy');
 });
 
-Route::middleware(['auth','role:Petugas Monitor Jaringan|superadmin|Petugas Utama'])->group(function () {
+Route::middleware(['auth', 'role:Petugas Monitor Jaringan|superadmin|Petugas Utama'])->group(function () {
     Route::get('/monitorjaringan', [MonitorController::class, 'index'])->name('monitor.index');
     Route::get('/monitorjaringan/create', [MonitorController::class, 'create'])->name('monitor.create');
     Route::post('/monitorjaringan', [MonitorController::class, 'store'])->name('monitor.store');
+    Route::delete('/monitorjaringan/{id}', [MonitorController::class, 'destroy'])->name('monitor.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [HomeControllers::class, 'index'])->name('dashboard'); 
+    Route::get('/dashboard', [HomeControllers::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -67,7 +68,7 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/pegawai/create', [UserController::class, 'create'])->name('pegawai.create');
     Route::post('/pegawai', [UserController::class, 'store'])->name('pegawai.store');
     Route::get('/pegawai/{id}', [UserController::class, 'edit'])->name('pegawai.edit');
-    Route::put('/pegawai/{id}', [UserController::class,'update'])->name('pegawai.update');
+    Route::put('/pegawai/{id}', [UserController::class, 'update'])->name('pegawai.update');
     Route::delete('/pegawai/{id}', [UserController::class, 'destroy'])->name('pegawai.destroy');
 });
 
