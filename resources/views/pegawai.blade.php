@@ -65,12 +65,10 @@
                                         <td class="px-6 py-4">{{ $data->email }}</td>
                                         <td class="px-6 py-4">{{ $data->getRoleNames()->first() }}</td>
                                         <td class="px-6 py-4 text-center">
-                                            <a href="" class="px-3 py-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">Edit</a>
-                                            <form action="" method="POST" class="inline-block">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="px-3 py-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 deleteButton">Hapus</button>
-                                            </form>
+                                            <a href="{{ route('pegawai.edit', $data->id) }}" class="px-3 py-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">Edit</a>
+                                            <button class="px-3 py-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 deleteButton" data-url="{{ route('pegawai.destroy', $data->id) }}">
+                                                Hapus
+                                            </button>
                                         </td>
                                     @endforeach
                                 @endif
@@ -99,4 +97,6 @@
             </section>
         </div>
     </div>
+
+    @include('components.modals.hapus')
 </x-app-layout>

@@ -78,7 +78,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::findOrFail($id); // Ambil user berdasarkan ID
+        $roles = Role::pluck('name', 'id'); // Ambil semua role (id dan name)
+        $userRole = $user->roles->pluck('id')->first(); // Ambil ID role user (asumsi satu role per user)
+    
+        return view('forms.editakun', compact('user', 'roles', 'userRole'));
     }
 
     /**
@@ -88,10 +92,31 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        //
-    }
+
+
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'nama' => 'required|string',
+        'email' => 'required|email|unique:users,email,' . $id,
+        'password' => 'nullable|min:6', // Password opsional
+        'role' => 'required|exists:roles,id',
+    ]);
+
+    $user = User::findOrFail($id);
+
+    $user->update([
+        'name' => $request->nama,
+        'email' => $request->email,
+        'password' => $request->password ? bcrypt($request->password) : $user->password, // Hanya update password jika diisi
+    ]);
+
+    // Sync role
+    $user->syncRoles([$request->role]);
+
+    return redirect()->route('pegawai.index')->with('success', 'Akun pegawai berhasil diperbarui.');
+}
+
 
     /**
      * Remove the specified resource from storage.
@@ -101,6 +126,14 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::findOrFail($id); // Cari user berdasarkan ID
+    
+        // Hapus role terkait
+        $user->syncRoles([]); // Kosongkan role user (opsional, tergantung kebutuhan)
+    
+        // Hapus user
+        $user->delete();
+    
+        return redirect()->route('pegawai.index')->with('success', 'Akun pegawai berhasil dihapus.');
     }
 }

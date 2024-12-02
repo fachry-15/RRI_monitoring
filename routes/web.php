@@ -67,6 +67,9 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/pegawai', [UserController::class, 'index'])->name('pegawai.index');
     Route::get('/pegawai/create', [UserController::class, 'create'])->name('pegawai.create');
     Route::post('/pegawai', [UserController::class, 'store'])->name('pegawai.store');
+    Route::get('/pegawai/{id}', [UserController::class, 'edit'])->name('pegawai.edit');
+    Route::put('/pegawai/{id}', [UserController::class,'update'])->name('pegawai.update');
+    Route::delete('/pegawai/{id}', [UserController::class, 'destroy'])->name('pegawai.destroy');
 });
 
 
