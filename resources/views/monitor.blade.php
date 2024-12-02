@@ -119,7 +119,7 @@
                                             <form action="" method="POST" class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="px-3 py-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 deleteButton">Hapus</button>
+                                                <button type="submit" class="mt-2 px-3 py-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 deleteButton">Hapus</button>
                                             </form>
                                         </td>
                                     </tr>
