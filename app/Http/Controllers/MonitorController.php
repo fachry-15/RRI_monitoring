@@ -94,10 +94,13 @@ class MonitorController extends Controller
      * @param  \App\Models\monitor  $monitor
      * @return \Illuminate\Http\Response
      */
-    public function edit(monitor $monitor)
+    public function edit($id)
     {
-        //
+        $monitor = monitor::findOrFail($id);
+        $jaringan = jaringan::with('ruangan')->get();
+        return view('forms.editmonitor', compact('monitor', 'jaringan'));
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -106,10 +109,36 @@ class MonitorController extends Controller
      * @param  \App\Models\monitor  $monitor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, monitor $monitor)
+    public function update(Request $request, $id)
     {
-        //
+        // Validasi data
+        $request->validate([
+            'router' => 'required|integer|min:1',
+            'status' => 'required|string|max:255',
+            'upload' => 'required|numeric|min:0',
+            'download' => 'required|numeric|min:0',
+            'petugas_id' => 'required|integer|min:1',
+        ]);
+
+        try {
+            // Update monitor
+            $monitor = monitor::findOrFail($id);
+            $monitor->jaringan_id = $request->router;
+            $monitor->kondisi = $request->status;
+            $monitor->upload = $request->upload;
+            $monitor->download = $request->download;
+            $monitor->petugas_id = $request->petugas_id;
+            $monitor->save();
+
+            return redirect()->route('monitor.index')->with('success', 'Data monitor berhasil diubah');
+        } catch (\Exception $e) {
+            return redirect()->back()->withErrors(['error' => 'Terjadi kesalahan: ' . $e->getMessage()]);
+        }
     }
+
+    //buatkan fungsi untuk upaate status value nya disetujui
+
+
 
     /**
      * Remove the specified resource from storage.

@@ -39,6 +39,8 @@ Route::middleware(['auth', 'role:Petugas Monitor Jaringan|superadmin|Petugas Uta
     Route::get('/monitorjaringan', [MonitorController::class, 'index'])->name('monitor.index');
     Route::get('/monitorjaringan/create', [MonitorController::class, 'create'])->name('monitor.create');
     Route::post('/monitorjaringan', [MonitorController::class, 'store'])->name('monitor.store');
+    Route::get('/monitorjaringan/{id}/edit', [MonitorController::class, 'edit'])->name('monitor.edit');
+    Route::put('/monitorjaringan/{id}', [MonitorController::class, 'update'])->name('monitor.update');
     Route::delete('/monitorjaringan/{id}', [MonitorController::class, 'destroy'])->name('monitor.destroy');
 });
 
