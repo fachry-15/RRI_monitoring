@@ -53,7 +53,7 @@
                             </thead>
                             <tbody>
                                 @if($jaringans->isEmpty())
-                                    <!-- Pesan jika tidak ada data -->
+                                    <!-- Pesan jika tidak ada data awal -->
                                     <tr>
                                         <td colspan="7" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
                                             Mohon maaf, belum ada Router jaringan yang ditambahkan.
@@ -64,10 +64,10 @@
                                     <tr class="border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
                                         <td class="px-6 py-4">{{ $jaringans->firstItem() + $index }}</td>
                                         <td class="px-6 py-4">{{ $data->nama_router }}</td>
-                                        <td class="px-6 py-4">{{ $data->ip_router}}</td>
-                                        <td class="px-6 py-4">{{$data->ruangan->nama_ruangan}}</td>
-                                        <td class="px-6 py-4">{{$data->upload}} Mbps</td>
-                                        <td class="px-6 py-4">{{$data->download}} Mbps</td>
+                                        <td class="px-6 py-4">{{ $data->ip_router }}</td>
+                                        <td class="px-6 py-4">{{ $data->ruangan->nama_ruangan }}</td>
+                                        <td class="px-6 py-4">{{ $data->upload }} Mbps</td>
+                                        <td class="px-6 py-4">{{ $data->download }} Mbps</td>
                                         <td class="px-6 py-4 text-center">
                                             <a href="{{ route('jaringan.edit', $data->id) }}" class="px-3 py-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">Edit</a>
                                             <button class="px-3 py-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 deleteButton" data-url="{{ route('jaringan.destroy', $data->id) }}">
@@ -77,7 +77,14 @@
                                     </tr>
                                     @endforeach
                                 @endif
+                                <!-- Pesan jika pencarian tidak menemukan hasil -->
+                                <tr id="no-result-message" style="display: none;">
+                                    <td colspan="7" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
+                                        Mohon maaf, kata kunci yang Anda cari tidak ada.
+                                    </td>
+                                </tr>
                             </tbody>
+                            
                         </table>
                     </div>
                 
@@ -104,4 +111,37 @@
     </div>
 
     @include('components.modals.hapus')
+
+    <script>
+        document.getElementById('simple-search').addEventListener('input', function() {
+            let searchQuery = this.value.toLowerCase(); // Ambil nilai input pencarian
+            let rows = document.querySelectorAll('tbody tr'); // Semua baris dalam tabel
+            let noResultMessage = document.getElementById('no-result-message'); // Elemen pesan "tidak ada hasil"
+            let found = false; // Untuk memeriksa apakah ada hasil
+            
+            rows.forEach(row => {
+                let routerName = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase(); // Nama Router
+                let ipRouter = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase(); // IP Router
+                let location = row.querySelector('td:nth-child(4)')?.textContent.toLowerCase(); // Lokasi
+                let upload = row.querySelector('td:nth-child(5)')?.textContent.toLowerCase(); // Upload
+                let download = row.querySelector('td:nth-child(6)')?.textContent.toLowerCase(); // Download
+                
+                // Periksa apakah salah satu data cocok dengan query pencarian
+                if (routerName?.includes(searchQuery) || ipRouter?.includes(searchQuery) || location?.includes(searchQuery) || upload?.includes(searchQuery) || download?.includes(searchQuery)) {
+                    row.style.display = ''; // Tampilkan baris
+                    found = true; // Tandai ada hasil
+                } else {
+                    row.style.display = 'none'; // Sembunyikan baris
+                }
+            });
+    
+            // Jika tidak ada hasil, tampilkan pesan "tidak ada hasil"
+            if (!found) {
+                noResultMessage.style.display = ''; // Tampilkan pesan
+            } else {
+                noResultMessage.style.display = 'none'; // Sembunyikan pesan
+            }
+        });
+    </script>
+    
 </x-app-layout>

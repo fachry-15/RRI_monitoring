@@ -3,7 +3,7 @@
         <div class="w-full mx-auto">
             <!-- Bagian Judul dan Penjelasan -->
             <section class="w-full px-6 mx-auto lg:px-12">
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Tambah Akun Pegawai</h1>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Edit Akun Pegawai</h1>
                 <p class="text-gray-600 dark:text-gray-300 mb-8">
                     Silakan isi form untuk pembuatan akun pegawai baru.
                 </p>

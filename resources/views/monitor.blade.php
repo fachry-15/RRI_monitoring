@@ -166,7 +166,7 @@
                     </div>
                 </div>
             </section>
-        </div>
+        </div>                                                                                                          
     </div>
 
     @include('components.modals.hapus')

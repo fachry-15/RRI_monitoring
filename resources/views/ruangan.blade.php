@@ -23,7 +23,7 @@
                                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                                         </svg>
                                     </div>
-                                    <input type="text" id="simple-search" class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Cari ruangan" required>
+                                    <input type="text" id="simple-search" class="block w-full p-3 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white" placeholder="Cari ruangan" required> 
                                 </div>
                             </form>
                         </div>
@@ -51,7 +51,7 @@
                             </thead>
                             <tbody>
                                 @if($ruangans->isEmpty())
-                                    <!-- Pesan jika tidak ada data -->
+                                    <!-- Pesan jika tidak ada data awal -->
                                     <tr>
                                         <td colspan="5" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
                                             Mohon maaf, belum ada ruangan yang ditambahkan.
@@ -75,7 +75,14 @@
                                     </tr>
                                     @endforeach
                                 @endif
+                                <!-- Pesan jika pencarian tidak menemukan hasil -->
+                                <tr id="no-result-message" style="display: none;">
+                                    <td colspan="5" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
+                                        Mohon maaf, kata kunci yang Anda cari tidak ada.
+                                    </td>
+                                </tr>
                             </tbody>
+                            
                         </table>
                     </div>
 
@@ -99,4 +106,34 @@
         </div>
     </div>
 @include('components.modals.hapus')
+<script>
+    document.getElementById('simple-search').addEventListener('input', function() {
+        let searchQuery = this.value.toLowerCase(); // Ambil nilai input pencarian
+        let rows = document.querySelectorAll('tbody tr'); // Semua baris dalam tabel
+        let noResultMessage = document.getElementById('no-result-message'); // Elemen pesan "tidak ada hasil"
+        let found = false; // Untuk memeriksa apakah ada hasil
+        
+        rows.forEach(row => {
+            let roomName = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase(); // Nama ruangan
+            let location = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase(); // Lokasi ruangan
+            
+            // Periksa apakah nama ruangan atau lokasi cocok dengan query pencarian
+            if (roomName?.includes(searchQuery) || location?.includes(searchQuery)) {
+                row.style.display = ''; // Tampilkan baris
+                found = true; // Tandai ada hasil
+            } else {
+                row.style.display = 'none'; // Sembunyikan baris
+            }
+        });
+
+        // Jika tidak ada hasil, tampilkan pesan "tidak ada hasil"
+        if (!found) {
+            noResultMessage.style.display = ''; // Tampilkan pesan
+        } else {
+            noResultMessage.style.display = 'none'; // Sembunyikan pesan
+        }
+    });
+</script>
+
+
 </x-app-layout>

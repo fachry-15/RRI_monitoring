@@ -24,10 +24,10 @@ class UserRoleSeeder extends Seeder
             $user->assignRole('superadmin');
         }
 
-        $user = User::find(2);
-        if ($user) {
-            $user->assignRole('Petugas Monitor Jaringan');
-        }
+        // $user = User::find(2);
+        // if ($user) {
+        //     $user->assignRole('Petugas Monitor Jaringan');
+        // }
 
         echo "User roles seeded successfully\n";
     }

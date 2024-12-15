@@ -53,9 +53,9 @@
                             </thead>
                             <tbody>
                                 @if($logger->isEmpty())
-                                    <!-- Pesan jika tidak ada data -->
+                                    <!-- Pesan jika tidak ada data awal -->
                                     <tr>
-                                        <td colspan="6" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
+                                        <td colspan="7" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
                                             Mohon maaf, belum ada Logger yang direcord.
                                         </td>
                                     </tr>
@@ -71,7 +71,7 @@
                                             <button data-modal-target="large-modal" data-modal-toggle="large-modal" class="px-3 py-2 text-xs font-medium text-white bg-green-700 rounded-lg hover:bg-green-800" type="button">
                                                 Gambar
                                             </button>
-
+                            
                                             <!-- Large Modal -->
                                             <div id="large-modal" tabindex="-1" class="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
                                                 <div class="relative w-full max-w-4xl max-h-full">
@@ -106,7 +106,14 @@
                                     </tr>
                                     @endforeach
                                 @endif
+                                <!-- Pesan jika pencarian tidak menemukan hasil -->
+                                <tr id="no-result-message" style="display: none;">
+                                    <td colspan="7" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
+                                        Mohon maaf, kata kunci yang Anda cari tidak ada.
+                                    </td>
+                                </tr>
                             </tbody>
+                            
                         </table>
                     </div>
 
@@ -131,4 +138,36 @@
     </div>
 
     @include('components.modals.hapus')
+
+    <script>
+        document.getElementById('simple-search').addEventListener('input', function() {
+            let searchQuery = this.value.toLowerCase(); // Ambil nilai input pencarian
+            let rows = document.querySelectorAll('tbody tr'); // Semua baris dalam tabel
+            let noResultMessage = document.getElementById('no-result-message'); // Elemen pesan "tidak ada hasil"
+            let found = false; // Untuk memeriksa apakah ada hasil
+            
+            rows.forEach(row => {
+                let channelLogger = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase(); // Channel Logger
+                let petugas = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase(); // Petugas
+                let tanggal = row.querySelector('td:nth-child(4)')?.textContent.toLowerCase(); // Tanggal
+                let waktu = row.querySelector('td:nth-child(5)')?.textContent.toLowerCase(); // Waktu
+                
+                // Periksa apakah salah satu data cocok dengan query pencarian
+                if (channelLogger?.includes(searchQuery) || petugas?.includes(searchQuery) || tanggal?.includes(searchQuery) || waktu?.includes(searchQuery)) {
+                    row.style.display = ''; // Tampilkan baris
+                    found = true; // Tandai ada hasil
+                } else {
+                    row.style.display = 'none'; // Sembunyikan baris
+                }
+            });
+    
+            // Jika tidak ada hasil, tampilkan pesan "tidak ada hasil"
+            if (!found) {
+                noResultMessage.style.display = ''; // Tampilkan pesan
+            } else {
+                noResultMessage.style.display = 'none'; // Sembunyikan pesan
+            }
+        });
+    </script>
+    
 </x-app-layout>
