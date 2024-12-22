@@ -1336,9 +1336,6 @@ input:checked + .toggle-bg {
 .mb-2 {
   margin-bottom: 0.5rem;
 }
-.mb-3 {
-  margin-bottom: 0.75rem;
-}
 .mb-4 {
   margin-bottom: 1rem;
 }
@@ -1629,9 +1626,6 @@ input:checked + .toggle-bg {
 }
 .grid-cols-1 {
   grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-.grid-cols-2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 .grid-cols-4 {
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -2178,6 +2172,10 @@ input:checked + .toggle-bg {
 }
 .tracking-widest {
   letter-spacing: 0.1em;
+}
+.text-blue-500 {
+  --tw-text-opacity: 1;
+  color: rgb(63 131 248 / var(--tw-text-opacity, 1));
 }
 .text-blue-600 {
   --tw-text-opacity: 1;

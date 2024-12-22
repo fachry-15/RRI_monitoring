@@ -25,56 +25,26 @@
                 <div class="flex flex-col items-center justify-center space-y-4">
                     <video id="preview" class="w-full h-full"></video>
                 </div>
-                <form action="{{ route('peminjaman.store') }}" id="form" method="POST">
+                <form action="{{ route('peminjaman.store.auto') }}" method="POST" id="form">
                     @csrf
-                    <div class="grid grid-cols-2 gap-4">
-                        <!-- Nama Barang -->
-                        <input type="hidden" name="barang" id="kode_barang"> 
-                        <!-- Acara/Kegiatan -->
-                        <div class="mb-3">
-                            <label for="acara" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Acara / Kegiatan</label>
-                            <input type="text" id="kerja" name="acara"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                placeholder="Masukkan acara/kegiatan" required>
-                        </div>
-
-                        <!-- Tanggal Digunakan -->
-                        <div class="mb-3">
-                            <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Tanggal Digunakan</label>
-                            <input type="date" id="date" name="tanggal"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                required>
-                        </div>
-
-                        <!-- Jam Mulai -->
-                        <div class="mb-3">
-                            <label for="mulai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Jam Mulai</label>
-                            <input type="time" id="start" name="mulai"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                required>
-                        </div>
-
-                        <!-- Jam Selesai -->
-                        <div class="mb-3">
-                            <label for="selesai" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Jam Selesai</label>
-                            <input type="time" id="end" name="selesai"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
-                                required>
-                        </div>
-
-                        <input type="text" id="petugas_id" name="petugas" value="{{ auth()->user()->id }}" hidden> 
-                    </div>
+                    <input type="hidden" name="barang" id="kode_barang">
+                
+                    <!-- Input yang akan diisi dengan data dari localStorage -->
+                    <input type="hidden" name="kegiatan" id="kerja" value="">
+                    <input type="hidden" name="tanggal_kegiatan" id="date" value="">
+                    <input type="hidden" name="jam_mulai" id="start" value="">
+                    <input type="hidden" name="jam_selesai" id="end" value="">
+                    <input type="hidden" name="petugas" value="{{ Auth::user()->id }}">
+                
+                    <!-- Button submit form -->
+                    <button style="display: none" type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
             <!-- Modal footer -->
             <div class="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
                 <button type="button"
                     class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
                     data-modal-hide="ambilOtomatisModal">Tutup</button>
-                    <button type="submit" 
-                    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-500 dark:hover:bg-blue-600 dark:focus:ring-blue-800">
-                    Simpan
-                </button>
-                </form>
             </div>
         </div>
     </div>
@@ -82,7 +52,7 @@
 
 <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
 <script type="text/javascript">
-    let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+     let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
     scanner.addListener('scan', function (content) {
       console.log(content);
       document.getElementById('kode_barang').value = content;
@@ -97,14 +67,14 @@
     }).catch(function (e) {
       console.error(e);
     });
-  </script>
+</script>
 
 <script>
-    // JavaScript to retrieve form data from localStorage
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('kerja').value = localStorage.getItem('kegiatan');
-        document.getElementById('date').value = localStorage.getItem('tanggal_kegiatan');
-        document.getElementById('start').value = localStorage.getItem('jam_mulai');
-        document.getElementById('end').value = localStorage.getItem('jam_selesai');
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('kerja').value = localStorage.getItem('kegiatan') || '';
+        document.getElementById('date').value = localStorage.getItem('tanggal_kegiatan') || '';
+        document.getElementById('start').value = localStorage.getItem('jam_mulai') || '';
+        document.getElementById('end').value = localStorage.getItem('jam_selesai') || '';
     });
+
 </script>

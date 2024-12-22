@@ -49,8 +49,10 @@ class PeminjamanController extends Controller
             'jam_mulai' => 'required|string|max:255',
             'jam_selesai' => 'required|string|max:255',
             'petugas' => 'required|integer',
-
         ]);
+
+        // Debugging input data
+        dd($validatedData);
 
         // Cek apakah barang sedang digunakan
         $cek = Peminjaman::where([
@@ -75,17 +77,58 @@ class PeminjamanController extends Controller
         $peminjaman->tanggal_kembali = now();
         $peminjaman->save();
 
-        // // Update status barang menjadi 1
-        // $barang = Barang::where('id', $validatedData['kode_barang'])->first();
-        // if ($barang) {
-        //     $barang->status = 1;
-        //     $barang->save();
-        // }
+        return redirect()->back()->with('success', 'Barang berhasil dipinjam.');
+    }
 
+    public function storeauto(Request $request)
+    {
+        // Validasi data awal
+        $validatedData = $request->validate([
+            'barang' => 'required|string|max:255', // Masukkan kode barang
+            'kegiatan' => 'required|string|max:255',
+            'tanggal_kegiatan' => 'required|date',
+            'jam_mulai' => 'required|string|max:255',
+            'jam_selesai' => 'required|string|max:255',
+            'petugas' => 'required|integer',
+        ]);
 
+        // Cari barang berdasarkan kode barang
+        $barang = Barang::where('kode_barang', $validatedData['barang'])->first();
+
+        if (!$barang) {
+            // Jika barang tidak ditemukan, kembali dengan pesan error
+            return redirect()->back()->with('error', 'Kode barang tidak valid.');
+        }
+
+        // Debugging untuk melihat data barang yang ditemukan
+        // dd($barang);
+
+        // Cek apakah barang sedang digunakan
+        $cek = Peminjaman::where([
+            'barang_id' => $barang->id,
+            'status' => 'sedang digunakan',
+        ])->first();
+
+        if ($cek) {
+            Log::info('Barang sedang digunakan', ['kode_barang' => $validatedData['barang']]);
+            return redirect()->back()->with('error', 'Mohon maaf, barang sedang digunakan saat ini.');
+        }
+
+        // Simpan data ke database
+        $peminjaman = new Peminjaman();
+        $peminjaman->barang_id = $barang->id; // Gunakan ID barang
+        $peminjaman->status = 'sedang digunakan';
+        $peminjaman->kegiatan = $validatedData['kegiatan'];
+        $peminjaman->tanggal_pinjam = $validatedData['tanggal_kegiatan'];
+        $peminjaman->jam_mulai = $validatedData['jam_mulai'];
+        $peminjaman->jam_selesai = $validatedData['jam_selesai'];
+        $peminjaman->user_id = $validatedData['petugas'];
+        $peminjaman->tanggal_kembali = now();
+        $peminjaman->save();
 
         return redirect()->back()->with('success', 'Barang berhasil dipinjam.');
     }
+
 
     /**
      * Display the specified resource.

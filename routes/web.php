@@ -8,6 +8,7 @@ use App\Http\Controllers\JaringanController;
 use App\Http\Controllers\KantorController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LoggerController;
+use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\MonitorController;
 use App\Http\Controllers\PDFController;
 use App\Http\Controllers\PeminjamanController;
@@ -62,6 +63,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
     Route::get('peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
     Route::post('peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
+    Route::post('peminjamanauto', [PeminjamanController::class, 'storeAuto'])->name('peminjaman.store.auto');
+
+    Route::get('maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
+    Route::get('maintenance/create', [MaintenanceController::class, 'create'])->name('maintenance.create');
+    Route::post('maintenance', [MaintenanceController::class, 'store'])->name('maintenance.store');
+    Route::get('maintenance/{id}/edit', [MaintenanceController::class, 'edit'])->name('maintenance.edit');
+    Route::put('maintenance/{id}', [MaintenanceController::class, 'update'])->name('maintenance.update');
+    Route::delete('maintenance/{id}', [MaintenanceController::class, 'destroy'])->name('maintenance.destroy');
 });
 
 Route::middleware(['auth', 'role:superadmin'])->group(function () {
