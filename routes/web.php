@@ -1,9 +1,16 @@
 <?php
 
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\HomeControllers;
 use App\Http\Controllers\JaringanController;
+use App\Http\Controllers\KantorController;
+use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\LoggerController;
 use App\Http\Controllers\MonitorController;
+use App\Http\Controllers\PDFController;
+use App\Http\Controllers\PeminjamanController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RuanganController;
 use App\Http\Controllers\UserController;
@@ -25,6 +32,9 @@ use Spatie\Permission\Models\Role;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/barang/cetak', [PDFController::class, 'cetakSemuaBarang'])->name('barang.cetak');
+Route::get('/barang/exportexcel', [ExcelController::class, 'exportExcel'])->name('barang.export');
 
 Route::middleware(['auth', 'role:Petugas Monitor Logger|superadmin|Petugas Utama'])->group(function () {
     Route::get('/logger', [LoggerController::class, 'index'])->name('logger.index');
@@ -49,6 +59,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/barang', [BarangController::class, 'index'])->name('barang.index');
+    Route::get('peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
+    Route::post('peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
 });
 
 Route::middleware(['auth', 'role:superadmin'])->group(function () {
@@ -65,6 +78,30 @@ Route::middleware(['auth', 'role:superadmin'])->group(function () {
     Route::get('/jaringan/{id}/edit', [JaringanController::class, 'edit'])->name('jaringan.edit');
     Route::put('/jaringan/{id}', [JaringanController::class, 'update'])->name('jaringan.update');
     Route::delete('/jaringan/{id}', [JaringanController::class, 'destroy'])->name('jaringan.destroy');
+
+    Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori.index');
+    Route::get('/kategori/create', [KategoriController::class, 'create'])->name('kategori.create');
+    Route::post('/kategori', [KategoriController::class, 'store'])->name('kategori.store');
+    Route::get('/kategori/{id}/edit', [KategoriController::class, 'edit'])->name('kategori.edit');
+    Route::put('/kategori/{id}', [KategoriController::class, 'update'])->name('kategori.update');
+    Route::delete('/kategori/{id}', [KategoriController::class, 'destroy'])->name('kategori.destroy');
+
+    Route::get('/kantor', [KantorController::class, 'index'])->name('kantor.index');
+    Route::get('/kantor/create', [KantorController::class, 'create'])->name('kantor.create');
+    Route::post('/kantor', [KantorController::class, 'store'])->name('kantor.store');
+    Route::get('/kantor/{id}/edit', [KantorController::class, 'edit'])->name('kantor.edit');
+    Route::put('/kantor/{id}', [KantorController::class, 'update'])->name('kantor.update');
+    Route::delete('/kantor/{id}', [KantorController::class, 'destroy'])->name('kantor.destroy');
+
+    Route::get('/barang/create', [BarangController::class, 'create'])->name('barang.create');
+    Route::post('/barang', [BarangController::class, 'store'])->name('barang.store');
+    Route::get('/barang/nama', [BarangController::class, 'show'])->name('barang.show');
+    Route::get('/barang/{id}', [BarangController::class, 'detail'])->name('barang.detail');
+
+    Route::get('/generate-qrcode/{kode}', [BarcodeController::class, 'Barcode'])->name('generateQRCode');
+    Route::get('/barang/{id}/barcode/cetak', [PDFController::class, 'cetakBarcode'])->name('barcode.cetak');
+
+
 
     Route::get('/pegawai', [UserController::class, 'index'])->name('pegawai.index');
     Route::get('/pegawai/create', [UserController::class, 'create'])->name('pegawai.create');

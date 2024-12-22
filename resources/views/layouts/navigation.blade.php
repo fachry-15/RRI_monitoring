@@ -201,20 +201,121 @@
                   
                <span class="flex-1 ms-3 whitespace-nowrap">Monitor Jaringan</span>
             </a>
-         </li>
+          </li>
+          <li>
+            <a href="{{ route('kategori.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11H4m15.5 5a.5.5 0 0 0 .5-.5V8a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44l-1.436-2.12a1 1 0 0 0-.828-.44H8a1 1 0 0 0-1 1M4 9v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-7a1 1 0 0 0-1-1h-3.75a1 1 0 0 1-.829-.44L9.985 8.44A1 1 0 0 0 9.157 8H5a1 1 0 0 0-1 1Z"/>
+              </svg>
+              
+               <span class="flex-1 ms-3 whitespace-nowrap">Kategori Barang</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('kantor.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M4 4a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2v14a1 1 0 1 1 0 2H5a1 1 0 1 1 0-2V5a1 1 0 0 1-1-1Zm5 2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1Zm-5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1h-1Zm-3 4a2 2 0 0 0-2 2v3h2v-3h2v3h2v-3a2 2 0 0 0-2-2h-2Z" clip-rule="evenodd"/>
+              </svg>              
+               <span class="flex-1 ms-3 whitespace-nowrap">Daftar Kantor</span>
+            </a>
+          </li>
+          <li>
+            <a href="{{ route('barang.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+              <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M9.166 19.986A.915.915 0 0 1 9 20H5a1 1 0 1 1 0-2h4c.057 0 .112.005.166.014a3.001 3.001 0 0 1 5.668 0A.915.915 0 0 1 15 18h4a1 1 0 1 1 0 2h-4c-.056 0-.112-.005-.166-.014a3.001 3.001 0 0 1-5.668 0ZM11 19a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" clip-rule="evenodd"/>
+                <path d="M11.5 2.131a1 1 0 0 1 1 0l4.601 2.657c-.06.018-.12.044-.179.075L12.08 7.475 6.946 4.76 11.5 2.131ZM5.967 6.505v5.21a1 1 0 0 0 .5.866l4.57 2.638V9.186l-5.07-2.681Zm7.07 8.671 4.496-2.595a1 1 0 0 0 .5-.866v-5.2a1 1 0 0 1-.161.108l-4.835 2.608v5.945Z"/>
+              </svg>                           
+               <span class="flex-1 ms-3 whitespace-nowrap">Daftar Barang</span>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0);" onclick="openModal()" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 5v14m6-8h-6m6 4h-6m-9-3h1.99093M4 19h16c.5523 0 1-.4477 1-1V6c0-.55228-.4477-1-1-1H4c-.55228 0-1 .44772-1 1v12c0 .5523.44772 1 1 1Zm8-7c0 1.1046-.8954 2-2 2-1.10457 0-2-.8954-2-2s.89543-2 2-2c1.1046 0 2 .8954 2 2Z"/>
+                </svg>                        
+                <span class="flex-1 ms-3 whitespace-nowrap">Ambil Barang</span>
+            </a>
+        </li>
+        
          <li>
-          <a href="{{ route('pegawai.index') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+          <button data-modal-target="otomatisModal" data-modal-toggle="otomatisModal" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
             <svg class="w-6 h-6 text-gray-500 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
               <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
             </svg>
             
                 
              <span class="flex-1 ms-3 whitespace-nowrap">Akun Pegawai</span>
-          </a>
+          </button>
        </li>
         </ul>
      </div>
   </aside>
   
+  <!-- Modal Ambil Barang -->
+<div id="modal-ambil-barang" class="fixed inset-0 z-50 flex items-center justify-center hidden bg-black bg-opacity-50">
+  <div class="relative w-full max-w-md p-6 bg-white rounded-lg shadow-lg dark:bg-gray-800">
+      <!-- Modal Header -->
+      <div class="flex items-center justify-between">
+          <h3 class="text-lg font-medium text-gray-800 dark:text-white">Ambil Barang</h3>
+          <button onclick="closeModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+          </button>
+      </div>
+      <!-- Modal Body -->
+      <div class="mt-4">
+        <form id="pengambilanForm">
+          @csrf
+          <label for="kegiatan" class="block text-sm font-medium text-gray-700 dark:text-gray-200">Kegiatan</label>
+          <input type="text" id="kegiatan" name="kegiatan" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 focus:ring-gray-500 focus:border-gray-500 sm:text-sm" required>
+          <label for="tanggal_kegiatan" class="block mt-4 text-sm font-medium text-gray-700 dark:text-gray-200">Tanggal Kegiatan</label>
+          <input type="date" id="tanggal_kegiatan" name="tanggal_kegiatan" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 focus:ring-gray-500 focus:border-gray-500 sm:text-sm" required>
+          <label for="jam_mulai" class="block mt-4 text-sm font-medium text-gray-700 dark:text-gray-200">Jam Mulai</label>
+          <input type="time" id="jam_mulai" name="jam_mulai" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 focus:ring-gray-500 focus:border-gray-500 sm:text-sm" required>
+          <label for="jam_selesai" class="block mt-4 text-sm font-medium text-gray-700 dark:text-gray-200">Jam Selesai</label>
+          <input type="time" id="jam_selesai" name="jam_selesai" class="block w-full mt-1 border-gray-300 rounded-md shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 focus:ring-gray-500 focus:border-gray-500 sm:text-sm" required>
+      </div>
+      <!-- Modal Footer -->
+      <div class="mt-6 flex justify-end">
+          <button onclick="closeModal()" class="px-4 py-2 text-sm font-medium text-gray-800 bg-gray-200 rounded-lg hover:bg-gray-300 dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600">
+              Tutup
+          </button>
+          <button id="saveData" type="button" class="px-4 py-2 ml-4 text-sm font-medium text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+              Simpan
+          </button>
+        </form>
+      </div>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+      document.getElementById('modal-ambil-barang').classList.remove('hidden');
+  }
+
+  function closeModal() {
+      document.getElementById('modal-ambil-barang').classList.add('hidden');
+  }
+</script>
+<script>
+  // JavaScript to save form data in localStorage and redirect to Pengambilan Manual page
+  document.getElementById('saveData').addEventListener('click', function() {
+      let kegiatan = document.getElementById('kegiatan').value;
+      let tanggal_kegiatan = document.getElementById('tanggal_kegiatan').value;
+      let jam_mulai = document.getElementById('jam_mulai').value;
+      let jam_selesai = document.getElementById('jam_selesai').value;
+
+      // Simpan data ke localStorage
+      localStorage.setItem('kegiatan', kegiatan);
+      localStorage.setItem('tanggal_kegiatan', tanggal_kegiatan);
+      localStorage.setItem('jam_mulai', jam_mulai);
+      localStorage.setItem('jam_selesai', jam_selesai);
+
+      // Redirect ke halaman Pengambilan Manual setelah data disimpan
+      window.location.href = "{{ route('peminjaman.index') }}";
+  });
+</script>
+
  
   
