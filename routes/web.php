@@ -36,6 +36,7 @@ Route::get('/', function () {
 });
 
 Route::get('/barang/cetak', [PDFController::class, 'cetakSemuaBarang'])->name('barang.cetak');
+Route::get('/barang/{id}/ticket/cetak', [PDFController::class, 'cetakticket'])->name('ticket.cetak');
 Route::get('/barang/exportexcel', [ExcelController::class, 'exportExcel'])->name('barang.export');
 
 Route::middleware(['auth', 'role:Petugas Monitor Logger|superadmin|Petugas Utama'])->group(function () {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\barang;
+use App\Models\maintenance;
 use Barryvdh\DomPDF\Facade\Pdf as Pdf;
 use Illuminate\Http\Request;
 
@@ -32,5 +33,14 @@ class PDFController extends Controller
         $pdf = Pdf::loadView('PDF.databarang', compact('barang'))->setPaper('A4', 'landscape');
 
         return $pdf->stream('hdtuto.pdf');
+    }
+
+    public function cetakticket($id)
+    {
+        $ticket = maintenance::with('barang')->findOrFail($id);
+
+        $pdf = Pdf::loadView('PDF.ticketmaintenance', compact('ticket'))->setPaper('A4', 'portrait');
+
+        return $pdf->stream('ticket.pdf');
     }
 }

@@ -2,8 +2,8 @@
     <div class="p-6 sm:ml-64 bg-gray-100 min-h-screen mt-14">
         <div class="w-full mx-auto">
             <!-- Bagian Judul dan Penjelasan -->
-            <section class="w-full px-6 mx-auto lg:px-12">
-                <h1 class="text-3xl font-bold text-gray-800 dark:text-white mb-4">Daftar Ticket Maintenance</h1>
+            <section class="w-full px-6 mx-auto lg:px-12 mb-6">
+                <h1 class="text-3xl font-semibold text-gray-800 dark:text-white mb-4">Daftar Ticket Maintenance</h1>
                 <p class="text-gray-600 dark:text-gray-300">
                     Berikut adalah daftar ticket maintenance yang tersedia.
                 </p>
@@ -14,8 +14,8 @@
                 <div class="relative bg-white shadow-lg rounded-lg dark:bg-gray-800">
                     <div class="p-6 flex flex-col md:flex-row items-center justify-between space-y-4 md:space-y-0">
                         <!-- Search Bar -->
-                        <div class="w-full md:w-2/3">
-                            <form class="flex items-center">
+                        <div class="w-full md:w-2/3 flex items-center">
+                            <form class="flex items-center w-full">
                                 <label for="simple-search" class="sr-only">Cari Ticket</label>
                                 <div class="relative w-full">
                                     <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -47,13 +47,11 @@
                                     <th class="px-6 py-3">Nama Barang</th>
                                     <th class="px-6 py-3">Jenis</th>
                                     <th class="px-6 py-3">Diagnosa</th>
-                                    <th class="px-6 py-3">Deskripsi</th>
                                     <th class="px-6 py-3 text-center">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @if($maintenance->isEmpty())
-                                    <!-- Pesan jika tidak ada data awal -->
                                     <tr>
                                         <td colspan="7" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
                                             Mohon maaf, belum ada ticket maintenance yang ditambahkan.
@@ -67,22 +65,23 @@
                                         <td class="px-6 py-4">{{ $data->barang->nama_barang }}</td>
                                         <td class="px-6 py-4">{{ $data->jenis }}</td>
                                         <td class="px-6 py-4">{{ $data->diagnosa }}</td>
-                                        <td class="px-6 py-4">{{ Str::limit($data->deskripsi, 20) }}</td>
-                                        <td class="px-6 py-4 text-center">
-                                            <a href="{{ route('maintenance.edit', $data->id) }}" class="px-3 py-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">Edit</a>
+                                        <td class="px-6 py-4 text-center space-x-2">
+                                            <!-- Tombol Edit -->
+                                            <a href="{{ route('maintenance.edit', $data->id) }}" class="px-3 py-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">
+                                                Edit
+                                            </a>
+                                            <!-- Tombol Hapus -->
                                             <button class="px-3 py-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 deleteButton" data-url="{{ route('maintenance.destroy', $data->id) }}">
-                                                Hapus</button>
+                                                Hapus
+                                            </button>
+                                            <a href="{{ route('ticket.cetak', $data->id) }}" class="px-3 py-2 text-xs font-medium text-white bg-yellow-300 rounded-lg hover:bg-yellow-400">
+                                                Cetak                                                  
+                                            </a>
                                         </td>
+                                    </tr>
                                     @endforeach
                                 @endif
-                                <!-- Pesan jika pencarian tidak menemukan hasil -->
-                                <tr id="no-result-message" style="display: none;">
-                                    <td colspan="5" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
-                                        Mohon maaf, kata kunci yang Anda cari tidak ada.
-                                    </td>
-                                </tr>
                             </tbody>
-                            
                         </table>
                     </div>
 
@@ -108,32 +107,29 @@
 @include('components.modals.hapus')
 <script>
     document.getElementById('simple-search').addEventListener('input', function() {
-        let searchQuery = this.value.toLowerCase(); // Ambil nilai input pencarian
-        let rows = document.querySelectorAll('tbody tr'); // Semua baris dalam tabel
-        let noResultMessage = document.getElementById('no-result-message'); // Elemen pesan "tidak ada hasil"
-        let found = false; // Untuk memeriksa apakah ada hasil
-        
+        let searchQuery = this.value.toLowerCase();
+        let rows = document.querySelectorAll('tbody tr');
+        let noResultMessage = document.getElementById('no-result-message');
+        let found = false;
+
         rows.forEach(row => {
-            let roomName = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase(); // Nama ruangan
-            let location = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase(); // Lokasi ruangan
+            let roomName = row.querySelector('td:nth-child(2)')?.textContent.toLowerCase();
+            let location = row.querySelector('td:nth-child(3)')?.textContent.toLowerCase();
             
-            // Periksa apakah nama ruangan atau lokasi cocok dengan query pencarian
             if (roomName?.includes(searchQuery) || location?.includes(searchQuery)) {
-                row.style.display = ''; // Tampilkan baris
-                found = true; // Tandai ada hasil
+                row.style.display = '';
+                found = true;
             } else {
-                row.style.display = 'none'; // Sembunyikan baris
+                row.style.display = 'none';
             }
         });
 
-        // Jika tidak ada hasil, tampilkan pesan "tidak ada hasil"
         if (!found) {
-            noResultMessage.style.display = ''; // Tampilkan pesan
+            noResultMessage.style.display = '';
         } else {
-            noResultMessage.style.display = 'none'; // Sembunyikan pesan
+            noResultMessage.style.display = 'none';
         }
     });
 </script>
-
 
 </x-app-layout>
