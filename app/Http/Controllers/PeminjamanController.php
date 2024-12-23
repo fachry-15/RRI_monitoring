@@ -17,7 +17,9 @@ class PeminjamanController extends Controller
     public function index()
     {
         // Ambil data peminjaman
-        $peminjaman = peminjaman::with('barang', 'user')->paginate(10);
+        $peminjaman = peminjaman::with('barang', 'user')
+            ->where('status', 'sedang digunakan')
+            ->paginate(10);
         $barangs = barang::all();
 
         return view('peminjaman', compact('peminjaman', 'barangs'));
@@ -51,8 +53,8 @@ class PeminjamanController extends Controller
             'petugas' => 'required|integer',
         ]);
 
-        // Debugging input data
-        dd($validatedData);
+        // // Debugging input data
+        // dd($validatedData);
 
         // Cek apakah barang sedang digunakan
         $cek = Peminjaman::where([

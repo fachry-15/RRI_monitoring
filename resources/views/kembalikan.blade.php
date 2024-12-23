@@ -31,13 +31,13 @@
                             <!-- Ambil Barang Manual Button -->
                             <button data-modal-target="ambilBarangModal" data-modal-toggle="ambilBarangModal"
                                 class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-green-500 to-green-700 rounded-lg shadow-md hover:from-green-400 hover:to-green-600 focus:ring-4 focus:ring-green-300 dark:focus:ring-green-900">
-                                Ambil Barang
+                                Kembalikan Manual
                             </button>
                         
                             <!-- Ambil Barang Otomatis Button -->
                             <button data-modal-target="ambilOtomatisModal" data-modal-toggle="ambilOtomatisModal"
                                 class="px-6 py-3 text-sm font-medium text-white bg-gradient-to-r from-blue-500 to-blue-700 rounded-lg shadow-md hover:from-blue-400 hover:to-blue-600 focus:ring-4 focus:ring-blue-300 dark:focus:ring-blue-900">
-                                Ambil Otomatis
+                                Kembalikan Otomatis
                             </button>
                         </div>
                         
@@ -55,9 +55,9 @@
                                     <th class="px-6 py-3">Nama Barang</th>
                                     <th class="px-6 py-3">Acara</th>
                                     <th class="px-6 py-3">Waktu Digunakan</th>
-                                    <th class="px-6 py-3">Tanggal Digunakan</th>
+                                    <th class="px-6 py-3">Tanggal Dikembalikan</th>
                                     <th class="px-6 py-3">Petugas</th>
-                                    <th class="px-6 py-3">Status</th>
+                                    <th class="px-6 py-3 text-center">Status</th>
                                     <th class="px-6 py-3 text-center">Aksi</th>
                                 </tr>
                             </thead>
@@ -65,7 +65,7 @@
                                 @if($peminjaman->isEmpty())
                                     <!-- Pesan jika tidak ada data awal -->
                                     <tr>
-                                        <td colspan="9" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
+                                        <td colspan="8" class="px-6 py-4 text-center text-gray-600 dark:text-gray-300">
                                             Mohon maaf, belum ada barang yang digunakan.
                                         </td>
                                     </tr>
@@ -77,18 +77,19 @@
                                         <td class="px-6 py-4">{{ $data->barang->nama_barang }}</td>
                                         <td class="px-6 py-4">{{ $data->kegiatan }}</td>
                                         <td class="px-6 py-4">{{ $data->jam_mulai }} - {{ $data->jam_selesai}}</td>
-                                        <td class="px-6 py-4">{{ $data->tanggal_pinjam }}</td>
+                                        <td class="px-6 py-4">{{ $data->tanggal_kembali }}</td>
                                         <td class="px-6 py-4">{{ $data->user->name }}</td>
                                         <td class="px-6 py-4">
                                             @if($data->status == 'Telah Dikembalikan')
-                                                <span class="px-2 py-1 text-xs font-semibold text-green-700 bg-green-200 rounded-full dark:bg-green-700 dark:text-green-200">
-                                                    {{ $data->status }}
-                                                </span>
-                                            @else
-                                                <span class="px-2 py-1 text-xs font-semibold text-red-700 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-200">
-                                                    {{ $data->status }}
-                                                </span>
-                                            @endif
+                                            <span class="px-2 py-1 text-xs font-semibold text-green-700 bg-green-200 rounded-full dark:bg-green-700 dark:text-green-200">
+                                                {{ $data->status }}
+                                            </span>
+                                        @else
+                                            <span class="px-2 py-1 text-xs font-semibold text-red-700 bg-red-200 rounded-full dark:bg-red-700 dark:text-red-200">
+                                                {{ $data->status }}
+                                            </span>
+                                        @endif
+                                        </td>
                                         <td class="px-6 py-4 text-center">
                                             <a href="" class="px-3 py-2 text-xs font-medium text-white bg-blue-700 rounded-lg hover:bg-blue-800">Edit</a>
                                             <button class="px-3 py-2 text-xs font-medium text-white bg-red-700 rounded-lg hover:bg-red-800 deleteButton" data-url="">
@@ -131,8 +132,8 @@
     </div>
 
     <!-- Modal Ambil Barang -->
-    @include('components.modals.pindahmanual')
-    @include('components.modals.pindahotomatis')
+    @include('components.modals.kembalikanmanual')
+    @include('components.modals.kembalikanotomatis')
     @include('components.modals.hapus')
 
     <script>
@@ -167,14 +168,5 @@
         });
     </script>
 
-<script>
-    // JavaScript to retrieve form data from localStorage
-    document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('acara').value = localStorage.getItem('kegiatan');
-        document.getElementById('tanggal').value = localStorage.getItem('tanggal_kegiatan');
-        document.getElementById('mulai').value = localStorage.getItem('jam_mulai');
-        document.getElementById('selesai').value = localStorage.getItem('jam_selesai');
-    });
-</script>
     
 </x-app-layout>

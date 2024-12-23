@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeControllers;
 use App\Http\Controllers\JaringanController;
 use App\Http\Controllers\KantorController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KembalikanController;
 use App\Http\Controllers\LoggerController;
 use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\MonitorController;
@@ -64,6 +65,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('peminjaman', [PeminjamanController::class, 'index'])->name('peminjaman.index');
     Route::post('peminjaman', [PeminjamanController::class, 'store'])->name('peminjaman.store');
     Route::post('peminjamanauto', [PeminjamanController::class, 'storeAuto'])->name('peminjaman.store.auto');
+    Route::get('kembalikan', [KembalikanController::class, 'index'])->name('kembalikan.index');
+    Route::post('kembalikan', [KembalikanController::class, 'store'])->name('kembalikan.store');
+    Route::post('kembalikanauto', [KembalikanController::class, 'storeAuto'])->name('kembalikan.store.auto');
 
     Route::get('maintenance', [MaintenanceController::class, 'index'])->name('maintenance.index');
     Route::get('maintenance/create', [MaintenanceController::class, 'create'])->name('maintenance.create');
